@@ -1,5 +1,5 @@
 <?php
-$host = 'localhost';
+$host = 'localhost';  // This could be the issue
 $username = 'root';
 $password = '';
 $database = 'dreamdraft';
