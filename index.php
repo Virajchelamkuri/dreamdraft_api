@@ -1,9 +1,9 @@
 <?php
 
 // Include necessary files for database and actions
-include 'get.php'; // For getting all posts
-include 'post.php'; // For posting data
-include 'getbyid.php'; // For getting data by ID
+include 'get_data.php'; // For getting all posts
+include 'post_data.php'; // For posting data
+include 'get_data_by_id.php'; // For getting data by ID
 
 // Check if there's a request method and corresponding action
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -23,20 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // Function to get all posts
 function getData() {
-    include 'get.php';
+    include 'get_data.php';
     echo getPosts(); // Assuming getPosts() returns JSON data
 }
 
 // Function to handle post data
 function postData() {
-    include 'post.php';
+    include 'post_data.php';
     $result = postUserData(); // Assuming postUserData() handles the POST request and returns a response
     echo $result;
 }
 
 // Function to get data by ID
 function getDataById($id) {
-    include 'getbyid.php';
+    include 'get_data_by_id.php';
     echo getPostById($id); // Assuming getPostById() handles the GET by ID request and returns JSON data
 }
 
