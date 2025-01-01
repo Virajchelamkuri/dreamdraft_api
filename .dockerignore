@@ -1,0 +1,12 @@
+# Ignore node_modules (if you have it in your project)
+node_modules/
+
+# Ignore the Dockerfile itself
+Dockerfile
+
+# Ignore other files like logs, temporary files, etc.
+*.log
+*.tmp
+.git/
+.gitignore
+.vscode/
