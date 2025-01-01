@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 
-if (isset($_GET['id'])) {
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM user_posts WHERE id = $id";
     $result = $conn->query($sql);
@@ -14,6 +14,6 @@ if (isset($_GET['id'])) {
         echo json_encode(["message" => "No data found for this ID"]);
     }
 } else {
-    echo json_encode(["message" => "ID not provided"]);
+    echo json_encode(["message" => "Invalid or missing ID"]);
 }
 ?>
