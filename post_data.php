@@ -2,28 +2,39 @@
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $mobile_number = $_POST['mobile_number'];
-    $budget = $_POST['budget'];
-    $place = $_POST['place'];
+    // Validate input data
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $mobile_number = mysqli_real_escape_string($conn, $_POST['mobile_number']);
+    $budget = mysqli_real_escape_string($conn, $_POST['budget']);
+    $place = mysqli_real_escape_string($conn, $_POST['place']);
 
-    // File upload handling
+    // Initialize variables for file uploads
     $file_path = '';
     $images = [];
 
-    if (isset($_FILES['file'])) {
+    // Handle single file upload
+    if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $file_name = time() . '_' . $_FILES['file']['name'];
         $upload_path = 'uploads/' . $file_name;
-        move_uploaded_file($_FILES['file']['tmp_name'], $upload_path);
-        $file_path = $upload_path;
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $upload_path)) {
+            $file_path = $upload_path;
+        } else {
+            echo json_encode(["message" => "Error uploading the file"]);
+            exit;
+        }
     }
 
-    if (isset($_FILES['images'])) {
+    // Handle multiple image uploads
+    if (isset($_FILES['images']) && $_FILES['images']['error'][0] == 0) {
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
             $image_name = time() . '_' . $_FILES['images']['name'][$key];
             $upload_image_path = 'uploads/' . $image_name;
-            move_uploaded_file($tmp_name, $upload_image_path);
-            $images[] = $upload_image_path;
+            if (move_uploaded_file($tmp_name, $upload_image_path)) {
+                $images[] = $upload_image_path;
+            } else {
+                echo json_encode(["message" => "Error uploading one of the images"]);
+                exit;
+            }
         }
     }
 
